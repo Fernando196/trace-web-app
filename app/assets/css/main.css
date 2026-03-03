@@ -1,6 +1,17 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #0b151e;
+  --color-secondary: #b6e56e;
+  --color-text: #99a1af;
+  --color-bg-card: #1f2932;
+  --color-bg-search: #1f2932;
+}
+
 body {
   padding: 0;
   margin: 0;
+  @apply bg-primary;
 }
 
 /* global.css o main.css */
