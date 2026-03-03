@@ -4,9 +4,7 @@ import AppHeader from '~/components/layout/AppHeader.vue'
 </script>
 
 <template>
-  <div
-    class="h-screen grid grid-cols-[550px_1fr] grid-rows-[auto_1fr] p-2 gap-2"
-  >
+  <div class="h-screen grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
     <app-header class="col-span-2" />
 
     <app-sidebar />
