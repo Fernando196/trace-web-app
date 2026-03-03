@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
-import type { Race } from '~/types/record.type'
+import type { Event } from '~/types/event.type'
 
-export const useReacesStore = defineStore('races', () => {
+export const useReacesStore = defineStore('events', () => {
   const isLoading = ref<boolean>(false)
-  const races = ref<Race[]>([])
-  const selectedRace = ref<Race | null>(null)
+  const events = ref<Event[]>([])
+  const selectedRace = ref<Event | null>(null)
+  const dayjs = useDayjs()
 
   async function getRaces() {
     try {
@@ -12,7 +13,7 @@ export const useReacesStore = defineStore('races', () => {
 
       await Promise.resolve(() => setTimeout(() => {}, 1000))
 
-      const newRaces: Race[] = Array.from(
+      const newRaces: Event[] = Array.from(
         { length: 100 },
         (_: undefined, index: number) => ({
           id: index + 1,
@@ -22,14 +23,16 @@ export const useReacesStore = defineStore('races', () => {
           image:
             'https://scontent.fntr6-3.fna.fbcdn.net/v/t39.30808-6/514104527_719767494084553_8228095185011851050_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=BIfeIPLNjE4Q7kNvwGpRfvN&_nc_oc=AdlrIzp_btEkygNXQbNWOS_bPcAe0N4zV3qJrjrAdnIHtEtPJ2TU6FT0DRoDb1LpWIE&_nc_zt=23&_nc_ht=scontent.fntr6-3.fna&_nc_gid=ec7ftq5cZudyCoTNngK-og&oh=00_AfvrjdJOXB4McKy97hPMVWe5wJPoy9iiT_w4NCBt-06izQ&oe=69A6B619',
           location: {
+            name: 'Nuevo Laredo, Tamp',
             lat: 10.0,
             lng: 10.0,
           },
-          cityName: 'Nuevo laredo',
+          km: '10k',
+          date: dayjs().format('yyyy-MM-DD'),
         })
       )
 
-      races.value = newRaces
+      events.value = newRaces
     } catch (err) {
       console.log(err)
     } finally {
@@ -37,12 +40,12 @@ export const useReacesStore = defineStore('races', () => {
     }
   }
 
-  function handleChangeSelected(race: Race) {
-    selectedRace.value = race
+  function handleChangeSelected(event: Event) {
+    selectedRace.value = event
   }
 
   return {
-    races,
+    events,
     selectedRace,
     handleChangeSelected,
     getRaces,
