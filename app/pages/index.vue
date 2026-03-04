@@ -1,9 +1,9 @@
-<!-- <script setup lang="ts">
-import GoogleMaps from '~/features/maps/components/GoogleMaps.vue'
-</script> -->
+<script setup lang="ts">
+import Map from '~/features/maps/components/Map.vue'
+</script>
 
 <template>
-  <!-- <ClientOnly>
-    <GoogleMaps />
-  </ClientOnly> -->
+  <ClientOnly>
+    <Map />
+  </ClientOnly>
 </template>

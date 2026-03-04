@@ -5,16 +5,14 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   srcDir: 'app/',
-  modules: ['@pinia/nuxt', 'dayjs-nuxt'],
+  modules: ['@pinia/nuxt', 'dayjs-nuxt', '@nuxtjs/leaflet'],
   typescript: {
     strict: true,
     typeCheck: false,
   },
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
-    public: {
-      googleMapsApiKey: '',
-    },
+    public: {},
   },
   vite: {
     plugins: [
