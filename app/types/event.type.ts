@@ -1,3 +1,5 @@
+import type { LatLngExpression } from 'leaflet'
+
 export interface Event {
   id: number
   name: string
@@ -5,8 +7,7 @@ export interface Event {
   image: string
   location: {
     name: string
-    lat: number
-    lng: number
+    coordinates: LatLngExpression
   }
   km: string
   date: string

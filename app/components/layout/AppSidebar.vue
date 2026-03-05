@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CardEvent from '../app/CardEvent.vue'
 
-const racesStore = useReacesStore()
+const racesStore = useEventStore()
 const { events } = storeToRefs(racesStore)
 
 onMounted(() => {
