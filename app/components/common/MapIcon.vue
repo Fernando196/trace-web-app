@@ -10,9 +10,10 @@ const componentMap: Record<string, Component> = {
   location: defineAsyncComponent(() => import('./icons/LocationIcon.vue')),
   route: defineAsyncComponent(() => import('./icons/RouteIcon.vue')),
   search: defineAsyncComponent(() => import('./icons/SearchIcon.vue')),
+  runner: defineAsyncComponent(() => import('./icons/RunnerIcon.vue')),
 }
 
-type Icons = 'facebook' | 'location' | 'route' | 'search'
+type Icons = 'facebook' | 'location' | 'route' | 'search' | 'runner'
 
 defineProps<{
   name: Icons
