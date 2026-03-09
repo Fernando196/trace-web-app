@@ -9,12 +9,15 @@ interface Props {
 const props = defineProps<Props>()
 const dayjs = useDayjs()
 
+const emit = defineEmits(['click'])
+
 const dayEvent = computed(() => dayjs(props.event.date).format('DD'))
 const monthEvent = computed(() => dayjs(props.event.date).format('MMM'))
 </script>
 <template>
   <div
     class="w-full shadow-2xl rounded-2xl bg-bg-card border-2 hover:border-secondary"
+    @click="emit('click')"
   >
     <div class="h-25 relative">
       <img
