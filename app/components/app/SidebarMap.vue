@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import CardEvent from '../app/CardEvent.vue'
 
-const racesStore = useEventStore()
-const { events } = storeToRefs(racesStore)
+const eventStore = useEventStore()
+const { events } = storeToRefs(eventStore)
 
 onMounted(() => {
-  racesStore.getRaces()
+  eventStore.getRaces()
 })
 </script>
 <template>
@@ -16,7 +16,11 @@ onMounted(() => {
       <h1 class="text-xl text-white font-semibold">EVENTOS</h1>
     </div>
     <div class="grid grid-cols-2 justify-center gap-5 px-5">
-      <CardEvent v-for="event in events" :event="event" />
+      <CardEvent
+        v-for="event in events"
+        :event="event"
+        @click="eventStore.updateSelectedEvent(event)"
+      />
     </div>
   </aside>
 </template>
