@@ -1,11 +1,12 @@
 import type { LatLngExpression } from 'leaflet'
 import { defineStore } from 'pinia'
+import { eventCoords } from '~/data/event-coords'
 import type { Event } from '~/types/event.type'
 
 export const useEventStore = defineStore('events', () => {
   const isLoading = ref<boolean>(false)
   const events = ref<Event[]>([])
-  const selectedRace = ref<Event | null>(null)
+  const selectedEvent = ref<Event | null>(null)
   const dayjs = useDayjs()
 
   async function getRaces() {
@@ -15,13 +16,7 @@ export const useEventStore = defineStore('events', () => {
       await Promise.resolve(() => setTimeout(() => {}, 1000))
 
       const examplesLat: LatLngExpression[] = [
-        [27.4900530576361, -99.5513112617975],
-        [27.456545050245122, -99.55233364407324],
-        [27.41846774168036, -99.54374626818841],
-        [27.47406011990198, -99.49963534741772],
-        [27.48792021040221, -99.49963180094579],
-        [27.435528039720843, -99.51508955514505],
-        [27.49051194450086, -99.53019286049779],
+        [27.487099210950515, -99.56760486181],
       ]
 
       const newRaces: Event[] = Array.from(
@@ -39,6 +34,7 @@ export const useEventStore = defineStore('events', () => {
           },
           km: '10k',
           date: dayjs().format('yyyy-MM-DD'),
+          coords: eventCoords,
         })
       )
 
@@ -50,14 +46,14 @@ export const useEventStore = defineStore('events', () => {
     }
   }
 
-  function handleChangeSelected(event: Event) {
-    selectedRace.value = event
+  function updateSelectedEvent(event: Event) {
+    selectedEvent.value = event.id === selectedEvent.value?.id ? null : event
   }
 
   return {
     events,
-    selectedRace,
-    handleChangeSelected,
+    selectedEvent,
+    updateSelectedEvent,
     getRaces,
   }
 })

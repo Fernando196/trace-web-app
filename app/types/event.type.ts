@@ -11,4 +11,5 @@ export interface Event {
   }
   km: string
   date: string
+  coords: LatLngExpression[]
 }

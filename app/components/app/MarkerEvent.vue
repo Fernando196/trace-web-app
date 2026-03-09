@@ -8,19 +8,44 @@ interface Props {
 
 defineProps<Props>()
 
-// const showTooltip = ref<boolean>(false)
+const markerRef = ref(undefined)
+const emit = defineEmits(['click'])
+
+const handleChangePopup = (open: boolean) => {
+  if (markerRef.value && (markerRef.value as any).leafletObject) {
+    if (open) {
+      ;(markerRef.value as any).leafletObject.openPopup()
+    } else {
+      ;(markerRef.value as any).leafletObject.closePopup()
+    }
+  }
+}
+
+defineExpose({
+  handleChangePopup,
+})
 </script>
 <template>
-  <LMarker :lat-lng="event.location.coordinates">
+  <LMarker
+    :lat-lng="event.location.coordinates"
+    @click="emit('click')"
+    ref="markerRef"
+  >
     <LIcon
       :icon-size="[40, 40]"
       :icon-anchor="[16, 16]"
       class-name="bg-transparent relative"
     >
-      <div
-        class="rounded-full px-2 py-2.5 bg-blue-400 flex justify-center items-center border-secondary border"
-      >
-        <MapIcon name="runner" class="w-5 text-secondary" />
+      <div class="group relative flex flex-col items-center">
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary border-2 border-secondary shadow-xl rotate-45 transition-all group-hover:rotate-0"
+        >
+          <div
+            class="-rotate-45 group-hover:rotate-0 transition-all text-secondary"
+          >
+            <MapIcon name="runner" class="w-5" />
+          </div>
+        </div>
       </div>
     </LIcon>
     <LPopup
@@ -48,7 +73,6 @@ defineProps<Props>()
   </LMarker>
 </template>
 <style lang="css">
-/* 1. Quitar el fondo blanco y la sombra del contenedor original */
 .trace-custom-popup .leaflet-popup-content-wrapper {
   background: transparent !important;
   box-shadow: none !important;
@@ -56,17 +80,14 @@ defineProps<Props>()
   border: none !important;
 }
 
-/* 2. Quitar la flechita blanca de abajo (o personalizarla) */
 .trace-custom-popup .leaflet-popup-tip-container {
-  display: none !important; /* La ocultamos para un look más moderno */
+  display: none !important;
 }
 
-/* 3. Quitar el botón de cerrar (la X blanca) */
 .trace-custom-popup .leaflet-popup-close-button {
   display: none !important;
 }
 
-/* 4. Resetear el margen interno que Leaflet le pone al contenido */
 .trace-custom-popup .leaflet-popup-content {
   margin: 0 !important;
   width: auto !important;
