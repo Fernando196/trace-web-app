@@ -1,18 +1,24 @@
 <script setup lang="ts">
 import type { LatLngExpression } from 'leaflet'
+import type { ComponentPublicInstance } from 'vue'
 import MapLeaflet from '~/components/app/Map.vue'
 import MarkerEvent from '~/components/app/MarkerEvent.vue'
 import SidebarMap from '~/components/app/SidebarMap.vue'
+import type { LMarker } from '~/types/leaftlet.type'
 
 const eventStore = useEventStore()
 const { events, selectedEvent } = storeToRefs(eventStore)
 
 const visibleCoords = ref<LatLngExpression[] | []>([])
 let interval: number
-const markerRefs = new Map<string | number, any>()
+const markerRefs = new Map<string | number, LMarker>()
+const mapRef = ref<InstanceType<typeof MapLeaflet> | null>(null)
 
-const setMarkerRef = (el: any, id: string | number) => {
-  if (el) markerRefs.set(id, el)
+const setMarkerRef = (
+  el: Element | ComponentPublicInstance | null,
+  id: string | number
+) => {
+  if (el) markerRefs.set(id, el as unknown as LMarker)
 }
 
 const animateRoute = () => {
@@ -37,9 +43,14 @@ watch(
   () => selectedEvent.value,
   () => {
     animateRoute()
-    const targerMarker = markerRefs.get(selectedEvent.value?.id!)
+    if (!selectedEvent.value) return
+    const targerMarker = markerRefs.get(selectedEvent.value.id)
     if (targerMarker) {
       targerMarker.handleChangePopup(true)
+      if (!mapRef.value) return
+      mapRef.value.centerMapOnBounds(
+        selectedEvent.value.coords as [number, number][]
+      )
     }
   }
 )
@@ -49,7 +60,7 @@ watch(
   <div class="h-full flex">
     <sidebar-map class="overflow-x-hidden" />
     <ClientOnly class="flex-1">
-      <MapLeaflet>
+      <MapLeaflet ref="mapRef">
         <MarkerEvent
           v-for="event in events"
           :key="'marker-event' + event.id"
