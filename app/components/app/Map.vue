@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { type PointExpression } from 'leaflet'
+import type { LMap } from '~/types/leaftlet.type'
 
 const center = ref<PointExpression>([27.4698, -99.528])
-const mapRef = ref<null>(null)
+const mapRef = ref<LMap | null>(null)
 
 const centerMapOnBounds = (coords: [number, number][]) => {
   if (mapRef.value && mapRef.value?.leafletObject) {
