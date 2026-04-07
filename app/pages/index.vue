@@ -41,16 +41,15 @@ const animateRoute = () => {
 
 watch(
   () => selectedEvent.value,
-  () => {
+  (newSelected, oldSelected) => {
     animateRoute()
-    if (!selectedEvent.value) return
-    const targerMarker = markerRefs.get(selectedEvent.value.id)
+    const selected = newSelected || oldSelected
+    if (!selected) return
+    const targerMarker = markerRefs.get(selected.id)
     if (targerMarker) {
-      targerMarker.handleChangePopup(true)
+      targerMarker.handleChangePopup(newSelected !== null)
       if (!mapRef.value) return
-      mapRef.value.centerMapOnBounds(
-        selectedEvent.value.coords as [number, number][]
-      )
+      mapRef.value.centerMapOnBounds(selected.coords as [number, number][])
     }
   }
 )
