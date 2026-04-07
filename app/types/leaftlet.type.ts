@@ -16,3 +16,7 @@ export interface LMarker {
 
   handleChangePopup: (open: boolean) => void
 }
+
+export interface LMap {
+  leafletObject: L.Map | null
+}
