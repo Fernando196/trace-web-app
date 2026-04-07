@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { type Marker } from 'leaflet'
 import MapIcon from '~/components/common/MapIcon.vue'
 import type { Event } from '~/types/event.type'
+import type { LMarker } from '~/types/leaftlet.type'
 
 interface Props {
   event: Event
@@ -8,15 +10,17 @@ interface Props {
 
 defineProps<Props>()
 
-const markerRef = ref(undefined)
+const markerRef = ref<LMarker | null>(null)
 const emit = defineEmits(['click'])
 
 const handleChangePopup = (open: boolean) => {
-  if (markerRef.value && (markerRef.value as any).leafletObject) {
+  if (markerRef.value && markerRef.value) {
+    const leafletInstance = markerRef.value.leafletObject as Marker | undefined
+    if (!leafletInstance) return
     if (open) {
-      ;(markerRef.value as any).leafletObject.openPopup()
+      leafletInstance.openPopup()
     } else {
-      ;(markerRef.value as any).leafletObject.closePopup()
+      leafletInstance.closePopup()
     }
   }
 }
