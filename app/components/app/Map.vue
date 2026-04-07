@@ -1,11 +1,28 @@
 <script lang="ts" setup>
-import type { PointExpression } from 'leaflet'
+import { type PointExpression } from 'leaflet'
 
 const center = ref<PointExpression>([27.4698, -99.528])
+const mapRef = ref<null>(null)
+
+const centerMapOnBounds = (coords: [number, number][]) => {
+  if (mapRef.value && mapRef.value?.leafletObject) {
+    const map = mapRef.value.leafletObject
+    map.fitBounds(coords, {
+      padding: [50, 50],
+      animate: true,
+      duration: 1.5,
+    })
+  }
+}
+
+defineExpose({
+  centerMapOnBounds,
+})
 </script>
 <template>
   <div class="w-full h-full bg-primary">
     <LMap
+      ref="mapRef"
       :zoom="13"
       :center="center"
       class="h-full w-full"
