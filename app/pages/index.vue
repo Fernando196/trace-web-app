@@ -49,7 +49,8 @@ watch(
     if (targerMarker) {
       targerMarker.handleChangePopup(newSelected !== null)
       if (!mapRef.value) return
-      mapRef.value.centerMapOnBounds(selected.coords as [number, number][])
+      if (newSelected !== null)
+        mapRef.value.centerMapOnBounds(selected.coords as [number, number][])
     }
   }
 )

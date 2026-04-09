@@ -13,7 +13,7 @@ const componentMap: Record<string, Component> = {
   runner: defineAsyncComponent(() => import('./icons/RunnerIcon.vue')),
 }
 
-type Icons = 'facebook' | 'location' | 'route' | 'search' | 'runner'
+export type Icons = 'facebook' | 'location' | 'route' | 'search' | 'runner'
 
 defineProps<{
   name: Icons
