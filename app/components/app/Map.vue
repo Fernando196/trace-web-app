@@ -18,6 +18,7 @@ const centerMapOnBounds = (coords: [number, number][]) => {
 
 defineExpose({
   centerMapOnBounds,
+  mapRef,
 })
 </script>
 <template>
