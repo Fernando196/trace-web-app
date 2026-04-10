@@ -101,6 +101,12 @@ const polylineCoords = computed(() => {
     (p) => [p.lat, p.lng] as [number, number]
   )
 })
+
+const saveEvent = () => {
+  // Aquí iría la lógica para enviar formData al backend
+  console.log('Guardando evento con datos:', formData.value)
+  alert('Evento guardado (simulado)')
+}
 </script>
 
 <template>
@@ -149,6 +155,15 @@ const polylineCoords = computed(() => {
         placeholder="Ingrese el nombre de la empresa"
         v-model="formData.company"
       />
+
+      <div class="col-span-12 mx-auto">
+        <button
+          class="bg-primary text-secondary px-10 rounded-sm py-2"
+          @click="saveEvent"
+        >
+          Guardar Evento
+        </button>
+      </div>
 
       <!-- Sección de explicación para crear ruta -->
       <div class="col-span-12 mt-4 border-t border-gray-600 pt-4">
